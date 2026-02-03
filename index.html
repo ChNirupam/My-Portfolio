@@ -1,174 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nirupamarayudu Chitturi | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    /* Reset & basic styles */
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    body {font-family: 'Roboto', sans-serif; line-height: 1.6; background: #f4f4f9; color: #333;}
-    a {text-decoration: none; color: inherit;}
-    section {padding: 60px 20px;}
-    .container {max-width: 1000px; margin: auto;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirupamarayudu Chitturi | Portfolio</title>
 
-    /* Header */
-    header {background: #1e40af; color: #fff; padding: 80px 20px; text-align: center;}
-    header h1 {font-size: 2.5rem;}
-    header p {margin-top: 10px; font-size: 1.2rem;}
-    header .social a {margin: 0 10px; color: #fff; font-weight: bold;}
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    /* About */
-    #about {background: #fff; text-align: center;}
-    #about h2 {font-size: 2rem; margin-bottom: 20px;}
-    #about p {max-width: 700px; margin: auto; font-size: 1.1rem;}
+<!-- GSAP -->
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
-    /* Skills */
-    #skills {background: #f4f4f9;}
-    #skills h2 {text-align: center; margin-bottom: 40px;}
-    .skills-list {display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;}
-    .skill {background: #1e40af; color: #fff; padding: 15px 25px; border-radius: 5px; font-weight: bold;}
-
-    /* Projects */
-    #projects {background: #fff;}
-    #projects h2 {text-align: center; margin-bottom: 40px;}
-    .project-card {background: #f0f4ff; padding: 20px; border-radius: 10px; margin: 20px auto; max-width: 700px;}
-    .project-card h3 {color: #1e40af;}
-    .project-card p {margin: 10px 0;}
-    .project-card a {color: #1e40af; font-weight: bold;}
-
-    /* Experience */
-    #experience {background: #f4f4f9;}
-    #experience h2 {text-align: center; margin-bottom: 40px;}
-    .job {margin-bottom: 30px;}
-    .job h3 {color: #1e40af;}
-    .job p {margin: 5px 0;}
-
-    /* Education */
-    #education {background: #fff; text-align: center;}
-    #education h2 {margin-bottom: 30px;}
-    .edu-item {margin-bottom: 20px;}
-
-    /* Contact */
-    #contact {background: #1e40af; color: #fff; text-align: center;}
-    #contact h2 {margin-bottom: 20px;}
-    #contact a {display: inline-block; margin: 10px 15px; background: #fff; color: #1e40af; padding: 10px 20px; border-radius: 5px; font-weight: bold;}
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .skills-list {flex-direction: column;}
-    }
-  </style>
+<style>
+:root{
+  --bg1:#020617;
+  --bg2:#071a3a;
+  --glass:rgba(255,255,255,0.07);
+  --stroke:rgba(255,255,255,0.12);
+  --accent:#7c5cff;
+  --accent2:#22d3ee;
+  --text:#eef4ff;
+  --muted:#9fb3c9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:Inter,system-ui;
+  background:radial-gradient(circle at top,var(--bg2),var(--bg1));
+  color:var(--text);
+  overflow-x:hidden;
+}
+canvas{position:fixed;inset:0;z-index:0;}
+section{min-height:100vh;padding:120px 20px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
+.container{max-width:1200px;width:100%;}
+.glass{
+  background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.02));
+  border:1px solid var(--stroke);
+  border-radius:24px;
+  padding:50px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 40px 140px rgba(0,0,0,.7);
+  transition: all 0.6s ease;
+}
+.glass:hover{
+  transform: translateY(-5px);
+  box-shadow:0 60px 180px rgba(0,0,0,0.8);
+}
+h1{font-size:56px;font-weight:800;}
+h2{font-size:36px;margin-bottom:24px;}
+h3{font-size:22px;margin-bottom:12px;}
+p{color:var(--muted);line-height:1.75;}
+a{color:var(--accent);text-decoration:none;}
+span.gradient{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+nav{
+  position:fixed;
+  top:24px;
+  right:24px;
+  display:flex;
+  gap:20px;
+  z-index:20;
+}
+nav a{color:var(--muted);font-weight:600;}
+nav a:hover{color:#fff;}
+.hero h1 span{color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:14px;font-size:14px;}
+.cta{display:inline-block;margin-top:32px;padding:16px 26px;border-radius:16px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-weight:800;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+.skill{background:var(--glass);border:1px solid var(--stroke);border-radius:20px;padding:22px;}
+.bar{height:10px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden;margin-top:12px;}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.project{background:var(--glass);border:1px solid var(--stroke);border-radius:22px;padding:26px;transition:transform 0.4s ease, box-shadow 0.4s ease;}
+.project:hover{transform:translateY(-10px);box-shadow:0 50px 180px rgba(0,0,0,.7);}
+.project ul{margin-top:10px;padding-left:18px;}
+.project li{color:var(--muted);margin-bottom:6px;}
+.resume-section{margin-top:40px;}
+.resume-item{margin-bottom:20px;}
+.resume-item h4{margin-bottom:4px;color:var(--accent);}
+footer{text-align:center;padding:40px 20px;color:var(--muted);position:relative;z-index:2;}
+ul{list-style: disc; padding-left: 20px;}
+@media(max-width:900px){h1{font-size:40px;}.grid-2{grid-template-columns:1fr;}.glass{padding:30px;}}
+</style>
 </head>
 <body>
 
-  <!-- Header / Hero -->
-  <header>
-    <h1>Nirupamarayudu Chitturi</h1>
-    <p>MS Computer Science Student | Full-Stack Developer | AI & ML Enthusiast</p>
-    <div class="social">
-      <a href="https://www.linkedin.com/in/nirupamarayudu-c-218264260/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/ChNirupam" target="_blank">GitHub</a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ch.nirupam.work@gmail.com" target="_blank">Email</a>
-    </div>
-  </header>
+<canvas id="bg"></canvas>
 
-  <!-- About Me -->
-  <section id="about">
-    <div class="container">
-      <h2>About Me</h2>
-      <p>
-        I am an MS Computer Science student at Georgia State University, passionate about building scalable web applications and exploring AI & Machine Learning. I have experience with Python, Java, C++, JavaScript, and Node.js, and I enjoy solving real-world problems through technology.
-      </p>
-    </div>
-  </section>
+<nav>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#education">Education</a>
+  <a href="#experience">Experience</a>
+  <a href="#achievements">Achievements</a>
+  <a href="https://github.com/ChNirupam" target="_blank">GitHub</a>
+  <a href="https://github.com/ChNirupam/My-resume/blob/main/Nirupam's%20Resume.pdf" target="_blank">Resume</a>
+</nav>
 
-  <!-- Skills -->
-  <section id="skills">
-    <div class="container">
-      <h2>Skills</h2>
-      <div class="skills-list">
-        <div class="skill">Python</div>
-        <div class="skill">Java</div>
-        <div class="skill">C++</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">Node.js</div>
-        <div class="skill">React</div>
-        <div class="skill">TensorFlow/Keras</div>
-        <div class="skill">MySQL</div>
-        <div class="skill">MongoDB</div>
-        <div class="skill">Git & GitHub</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="container glass">
+    <h1>Nirupamarayudu <span>Chitturi</span></h1>
+    <p>Master’s CS Student · AI/ML · Data Science · Full-Stack</p>
+    <div class="hero-meta">
+      <span>📍 Atlanta, GA</span>
+      <span>📞 +1 404 703 7305</span>
+      <span>✉️ ch.nirupam.work@gmail.com</span>
+      <span>💼 <a href="https://www.linkedin.com/in/yourlinkedin" target="_blank">LinkedIn</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container glass">
+    <h2>Technical Skills</h2>
+    <div class="grid-3">
+      <div class="skill"><h3>Python</h3><div class="bar"><span data-w="92%"></span></div></div>
+      <div class="skill"><h3>JavaScript</h3><div class="bar"><span data-w="88%"></span></div></div>
+      <div class="skill"><h3>React / Angular</h3><div class="bar"><span data-w="86%"></span></div></div>
+      <div class="skill"><h3>SQL / Pandas</h3><div class="bar"><span data-w="90%"></span></div></div>
+      <div class="skill"><h3>AWS / Cloud</h3><div class="bar"><span data-w="84%"></span></div></div>
+      <div class="skill"><h3>Machine Learning</h3><div class="bar"><span data-w="85%"></span></div></div>
+      <div class="skill"><h3>Web Development</h3><div class="bar"><span data-w="89%"></span></div></div>
+      <div class="skill"><h3>Java</h3><div class="bar"><span data-w="82%"></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container glass">
+    <h2>Projects</h2>
+    <div class="grid-2">
+      <div class="project">
+        <h3>IoT Driven Smart Home Automation</h3>
+        <ul>
+          <li>Real-time cloud monitoring and automation of devices</li>
+          <li>ESP8266 sensors integrated with AWS IoT</li>
+          <li>React frontend with REST API backend</li>
+        </ul>
+      </div>
+      <div class="project">
+        <h3>Cloud Resource Management Using CloudSim</h3>
+        <ul>
+          <li>Simulated distributed cloud environments</li>
+          <li>Optimized VM scheduling and resource utilization</li>
+        </ul>
+      </div>
+      <div class="project">
+        <h3>AIoT Water Quality Monitoring</h3>
+        <ul>
+          <li>Real-time water quality monitoring using IoT sensors</li>
+          <li>ML models predict water quality parameters</li>
+          <li>Automated alerts for unsafe conditions</li>
+        </ul>
+      </div>
+      <div class="project">
+        <h3>Property Pulse – Real Estate Analytics App</h3>
+        <ul>
+          <li>Web app to analyze real estate trends using Python and SQL</li>
+          <li>Predictive models estimate property prices for investors</li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Projects -->
-  <section id="projects">
-    <div class="container">
-      <h2>Projects</h2>
-
-      <div class="project-card">
-        <h3>AIoT Water Quality Monitoring System</h3>
-        <p>Built an intelligent IoT-based system for water quality monitoring using ESP8266 sensors, cloud platforms, and ML prediction models.</p>
-        <p>Tech Stack: Python, ESP8266, TensorFlow, Cloud IoT</p>
-        <a href="https://github.com/ChNirupam/WaterQualityMonitoring" target="_blank">View on GitHub</a>
-      </div>
-
-      <div class="project-card">
-        <h3>Full-Stack Web App</h3>
-        <p>Developed a full-stack web application with Node.js backend, React frontend, and MongoDB database. Implemented user authentication and REST APIs.</p>
-        <p>Tech Stack: Node.js, React, MongoDB</p>
-        <a href="https://github.com/ChNirupam/FullStackWebApp" target="_blank">View on GitHub</a>
-      </div>
-
-      <div class="project-card">
-        <h3>Machine Learning Prediction Tool</h3>
-        <p>Created a ML model to predict trends in dataset analysis, optimized for performance and accuracy using Python and scikit-learn.</p>
-        <p>Tech Stack: Python, scikit-learn, Pandas</p>
-        <a href="https://github.com/ChNirupam/MLPrediction" target="_blank">View on GitHub</a>
-      </div>
-
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container glass">
+    <h2>Education</h2>
+    <div class="resume-item">
+      <h4>Master’s in Computer Science, Georgia State University (2025–Present)</h4>
     </div>
-  </section>
-
-  <!-- Experience -->
-  <section id="experience">
-    <div class="container">
-      <h2>Experience</h2>
-
-      <div class="job">
-        <h3>Web Developer Intern – ETHNUS</h3>
-        <p>Developed full-stack web applications using Node.js and React, implemented authentication and REST APIs, and collaborated with the team for project delivery.</p>
-      </div>
-
+    <div class="resume-item">
+      <h4>Bachelor of Technology in Computer Science, VIT Vellore (2021–2025)</h4>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Education -->
-  <section id="education">
-    <div class="container">
-      <h2>Education</h2>
-      <div class="edu-item">
-        <h3>MS Computer Science</h3>
-        <p>Georgia State University | Expected 2027</p>
-      </div>
-      <div class="edu-item">
-        <h3>B.Tech in Computer Science</h3>
-        <p>Vellore Institute of Technology (2021-2025)</p>
-      </div>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container glass">
+    <h2>Experience</h2>
+    <div class="resume-item">
+      <h4>Web Developer Intern – Ethnus (Aug 2023 - Nov 2023)</h4>
+      <ul>
+        <li>Built full-stack LMS with React & REST APIs improving engagement</li>
+        <li>Implemented secure authentication and optimized UI</li>
+      </ul>
     </div>
-  </section>
+    <div class="resume-item">
+      <h4>Software Engineering Research Assistant – VIT (Jan 2023 - Dec 2023)</h4>
+      <ul>
+        <li>Engineered data pipelines using Python & SQL for AI applications</li>
+        <li>Built modular, reusable code for large-scale data analysis</li>
+        <li>Evaluated ML models for accuracy and reliability</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <div class="container">
-      <h2>Contact Me</h2>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ch.nirupam.work@gmail.com" target="_blank">Email</a>
-      <a href="https://www.linkedin.com/in/nirupamarayudu-c-218264260/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/ChNirupam" target="_blank">GitHub</a>
-    </div>
-  </section>
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container glass">
+    <h2>Achievements</h2>
+    <ul>
+      <li>AWS Certified Cloud Practitioner</li>
+      <li>Developed scalable IoT & ML solutions for research projects</li>
+      <li>Published papers on data analysis and ML evaluation</li>
+      <li>Multiple coding hackathon prizes and team projects</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  © 2026 Nirupamarayudu Chitturi · <a href="https://github.com/ChNirupam" target="_blank">GitHub</a> · <a href="https://www.linkedin.com/in/yourlinkedin" target="_blank">LinkedIn</a>
+</footer>
+
+<!-- ================== INTERACTIVE PARTICLE BACKGROUND ================== -->
+<script>
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+let w,h;
+let particles = [];
+let mouse = { x:0, y:0 };
+let scrollY = 0;
+
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+// Particle constructor
+class Particle {
+  constructor(){
+    this.x = Math.random()*w;
+    this.y = Math.random()*h;
+    this.r = Math.random()*1.5+0.5;
+    this.dx = (Math.random()-0.5)*0.7;
+    this.dy = (Math.random()-0.5)*0.7;
+    this.color = `hsla(${Math.random()*360},80%,70%,0.8)`;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r,0,Math.PI*2);
+    ctx.fillStyle=this.color;
+    ctx.fill();
+  }
+  update(){
+    this.x += this.dx + (mouse.x - w/2)*0.0005 + scrollY*0.0005;
+    this.y += this.dy + (mouse.y - h/2)*0.0005 + scrollY*0.0005;
+    if(this.x<0 || this.x>w)this.dx*=-1;
+    if(this.y<0 || this.y>h)this.dy*=-1;
+    this.draw();
+  }
+}
+
+// Create 500 particles
+for(let i=0;i<500;i++) particles.push(new Particle());
+
+// Connect close particles
+function connectParticles(){
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      let dx = particles[i].x - particles[j].x;
+      let dy = particles[i].y - particles[j].y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist<120){
+        ctx.beginPath();
+        ctx.strokeStyle=`hsla(${Math.random()*360},80%,70%,${1-dist/120})`;
+        ctx.lineWidth=0.5;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+// Animate
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p=>p.update());
+  connectParticles();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Mouse move effect
+window.addEventListener("mousemove", e=>{
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+// Click effect (explosion)
+window.addEventListener("click", e=>{
+  particles.forEach(p=>{
+    let dx = p.x - e.clientX;
+    let dy = p.y - e.clientY;
+    let dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist<150){
+      p.dx += dx*0.01;
+      p.dy += dy*0.01;
+    }
+  });
+});
+
+// Scroll effect
+window.addEventListener("scroll", ()=>{
+  scrollY = window.scrollY;
+});
+</script>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+// Glass fade-in animations
+gsap.utils.toArray(".glass").forEach(el=>{
+  gsap.from(el,{opacity:0,y:80,duration:1.2,scrollTrigger:{trigger:el,start:"top 85%"}});
+});
+// Skills bar animation
+document.querySelectorAll(".bar span").forEach(bar=>{
+  gsap.to(bar,{width:bar.dataset.w,duration:1.5,scrollTrigger:{trigger:bar,start:"top 90%"}});
+});
+</script>
 
 </body>
 </html>
